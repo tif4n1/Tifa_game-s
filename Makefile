@@ -88,3 +88,94 @@ int proses_login(void)
         mvprintw(3, 2, "Login berhasil. Selamat datang, %s!", nama);
         tunggu_tombol();
         return 1;
+}
+
+    clear();
+    mvprintw(3, 2, "Username atau password salah.");
+    tunggu_tombol();
+    return 0;
+}
+
+void reset_password(void)
+{
+    char nama[MAX_INPUT];
+    char sandi_baru[MAX_INPUT];
+
+    clear();
+    mvprintw(2, 2, "=== RESET PASSWORD ===");
+    move(4, 2);
+    baca_input("Username akun: ", nama, sizeof(nama), 0);
+
+    if (strcmp(nama, username_akun) != 0) {
+        mvprintw(6, 2, "Username tidak ditemukan.");
+        tunggu_tombol();
+        return;
+    }
+
+    move(5, 2);
+    baca_input("Password baru: ", sandi_baru, sizeof(sandi_baru), 1);
+
+    if (strlen(sandi_baru) == 0) {
+        mvprintw(7, 2, "Password tidak boleh kosong.");
+    } else {
+        strcpy(password_akun, sandi_baru);
+        mvprintw(7, 2, "Password berhasil diubah.");
+    }
+
+    tunggu_tombol();
+}
+
+int pilih_level(void)
+{
+    int pilihan = 0;
+    const char *nama_level[] = {
+        "Level 1 - Santai",
+        "Level 2 - Sedang",
+        "Level 3 - Cepat"
+    };
+
+    while (1) {
+        int tombol;
+
+        clear();
+        mvprintw(2, 2, "=== PILIH LEVEL ===");
+        mvprintw(4, 2, "Gunakan panah atas/bawah, lalu Enter.");
+
+        for (int i = 0; i < 3; i++) {
+            if (i == pilihan) {
+                attron(A_REVERSE);
+            }
+            mvprintw(6 + i, 4, "%s", nama_level[i]);
+            if (i == pilihan) {
+                attroff(A_REVERSE);
+            }
+        }
+
+        refresh();
+        tombol = getch();
+
+        if (tombol == KEY_UP && pilihan > 0) {
+            pilihan--;
+        } else if (tombol == KEY_DOWN && pilihan < 2) {
+            pilihan++;
+        } else if (tombol == '\n' || tombol == KEY_ENTER) {
+            return pilihan + 1;
+        } else if (tombol == 27) {
+            return 0;
+        }
+    }
+}
+
+/* x = titik tengah mobil, y = baris paling atas mobil */
+void gambar_mobil(int x, int y, int tebal)
+{
+    int kiri = x - LEBAR_MOBIL / 2;
+
+    if (tebal) {
+        attron(A_BOLD);
+    }
+    for (int i = 0; i < TINGGI_MOBIL; i++) {
+        int baris = y + i;
+        if (baris >= 1 && baris < LINES - 1) {
+            mvprintw(baris, kiri, "%s", gambar_art[i]);
+        }
