@@ -1,5 +1,5 @@
 
-# GAME-CAR-RACE
+# GAME_SEDERHANA
 
 Game balap mobil sederhana berbasis terminal menggunakan C++ dan ncurses.
 
