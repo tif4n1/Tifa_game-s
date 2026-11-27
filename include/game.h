@@ -1,8 +1,7 @@
-#ifndef AUTH_H
-#define AUTH_H
+#ifndef GAME_H
+#define GAME_H
 
-int proses_login(void);
-void reset_password(void);
-int pengguna_sudah_login(void);
+int pilih_level(void);
+void mainkan_game(int level);
 
 #endif
