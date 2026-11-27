@@ -1,4 +1,4 @@
-# GAME-CAR-RACE
+
 # GAME-CAR-RACE
 
 Game balap mobil sederhana berbasis terminal menggunakan C++ dan ncurses.
